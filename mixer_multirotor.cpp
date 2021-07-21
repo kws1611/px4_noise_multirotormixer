@@ -306,12 +306,12 @@ void MultirotorMixer::mix_airmode_rp(float roll, float pitch, float yaw, float t
 	for (unsigned i = 0; i < _rotor_count; i++) {
 		outputs[i] = (roll * _rotors[i].roll_scale +
 			     pitch * _rotors[i].pitch_scale +
-			     thrust * _rotors[i].thrust_scale) * (1 + randomnoise());
+			     thrust * _rotors[i].thrust_scale) ;//* (1 + randomnoise());
 
 		// Thrust will be used to unsaturate if needed
 		_tmp_array[i] = _rotors[i].thrust_scale;
 	}
-	std::cout << "@ numbers1 : " << _tmp_array[1] << std::endl;
+	//std::cout << "@ numbers1 : " << _tmp_array[1] << std::endl;
 
 	minimize_saturation(_tmp_array, outputs, _saturation_status);
 
@@ -328,12 +328,12 @@ void MultirotorMixer::mix_airmode_rpy(float roll, float pitch, float yaw, float 
 		outputs[i] = (roll * _rotors[i].roll_scale +
 			     pitch * _rotors[i].pitch_scale +
 			     yaw * _rotors[i].yaw_scale +
-			     thrust * _rotors[i].thrust_scale) * (1 + randomnoise());
+			     thrust * _rotors[i].thrust_scale);// * (1 + randomnoise());
 
 		// Thrust will be used to unsaturate if needed
 		_tmp_array[i] = _rotors[i].thrust_scale;
 	}
-	std::cout << "@ numbers2 : " << _tmp_array[1] << std::endl;
+	//std::cout << "@ numbers2 : " << _tmp_array[1] << std::endl;
 
 	minimize_saturation(_tmp_array, outputs, _saturation_status);
 
@@ -367,7 +367,7 @@ void MultirotorMixer::mix_airmode_disabled(float roll, float pitch, float yaw, f
 	for (unsigned i = 0; i < _rotor_count; i++) {
 		_tmp_array[i] = _rotors[i].roll_scale;
 	}
-	std::cout << "@ numbers3 : " << _tmp_array[1] << std::endl;
+	//std::cout << "@ numbers3 : " << _tmp_array[1] << std::endl;
 
 	minimize_saturation(_tmp_array, outputs, _saturation_status);
 
@@ -393,7 +393,7 @@ void MultirotorMixer::mix_yaw(float yaw, float *outputs)
 
 	// Change yaw acceleration to unsaturate the outputs if needed (do not change roll/pitch),
 	// and allow some yaw response at maximum thrust
-	std::cout << "@ numbers4 : " << _tmp_array[1] << std::endl;
+	//std::cout << "@ numbers4 : " << _tmp_array[1] << std::endl;
 	minimize_saturation(_tmp_array, outputs, _saturation_status, 0.f, 1.15f);
 
 	for (unsigned i = 0; i < _rotor_count; i++) {
